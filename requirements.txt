@@ -1,0 +1,4 @@
+numpy==1.24.3
+python-chess==1.999
+torch==2.6.0+cu126
+pytorch-lightning==2.5.1
