@@ -1,101 +1,85 @@
-# NNUE Trainer
+# How to Train
 
-## Installation
+Follow these simple steps to train your own NNUE network quickly and efficiently!
 
-To install the library, use the following command:
+---
 
+## 1. Prepare Your Training Set
+- Option 1: **Generate the training set yourself**
+  - Download the AIO package:
+    https://github.com/FireFather/sf-nnue-aio/releases/tag/08-01-2022-AIO
+  - Open the AIO set.
+  - Compile `process.rs` yourself with Rust:
+    ```bash
+    rustc -C opt-level=3 process.rs
+    ```
+  - Then run inside the AIO program:
+    ```bash
+    gensfen depth 8 loop 75000000 save_every 75000000 output_file_name train.bin
+    gensfen depth 8 loop 20000000 save_every 20000000 output_file_name val.bin
+    ```
+- Option 2: **Download pre-generated training sets** from my website if you don't want to generate them manually.
+
+---
+
+## 2. Install Requirements
+- Install **Python 3.x**
+- Install required Python packages:
+  ```bash
+  pip install -r requirements.txt
+  ```
+
+---
+
+## 3. Adjust `main.py`
+- Open `main.py` in any text editor.
+- At the end of the file, find the lines:
+  ```bash
+  train_loader = 'train_set_1.bin'  # Change this to the file you want to train with
+  ```
+- Example: If you are training with `train_set_2.bin`, set it accordingly.
+
+---
+
+## 4. Start Training
+Run:
 ```bash
-pip install nnue-trainer
+python main.py
 ```
 
-Additionally, the `nnue-parser` library is required for parsing training data:
+---
 
-```bash
-pip install nnue-parser
-```
+## 5. Continue Training with a New Set
+If you have more training files:
+1. Train with the first set.
+2. Save the checkpoint.
+3. To continue, run:
+   ```bash
+   python train.py --resume checkpoint_last.ckpt
+   ```
+4. Update `train_loader` in `main.py` to the next file (e.g., `train_set_2.bin`) and continue training.
+
+---
+
+## 6. Quantize
+The trainingscode while generate checkpoints in the folder log. 
+1. Search for a .ckpt and move it to the root directory.
+2. To quantize run:
+   ```bash
+   python train.py --quantize
+   ```
+   
+---
 
 
-## Usage
+## 6. Pretrained Model (Optional)
+If you don't want to train from scratch, you can use the already trained model `nnue_pretrained.bin` that I uploaded.
 
-A simple example for training an NNUE model:
+---
 
-```python
-from nnue_trainer import train_nnue
+## Credits
+- Thanks to [DanielUranga/TensorFlowNNUE](https://github.com/DanielUranga/TensorFlowNNUE) for the open-source NNUE model!
 
-if __name__ == "__main__":
-    train_nnue(
-        train_file="train.bin",
-        val_file="val.bin",
-        epochs=10,
-        batch_size=4096,
-        device="gpu",
-        num_workers=5,
-        quantize=True
-    )
-```
+---
 
-### Parameter Description:
-
-| Parameter      | Description |
-|---------------|-------------|
-| `train_file`  | Path to the training file in `.bin` format |
-| `val_file`    | Path to the validation file in `.bin` format |
-| `epochs`      | Number of training iterations |
-| `batch_size`  | Batch size for processing |
-| `device`      | Choose `"cpu"` or `"gpu"` to specify the device |
-| `num_workers` | Number of parallel processes for data loading |
-| `quantize`    | If `True`, the model will be quantized |
-
-## Creating `.bin` Training Files
-
-The `.bin` training files can be generated using the following tool:  
-[FireFather/sf-nnue-aio](https://github.com/FireFather/sf-nnue-aio/releases/tag/08-01-2022-AIO)
-
-Use the following command:
-
-```bash
-gensfen depth 8 loop 100000
-```
-
-This command generates SFEN data with a search depth of 8 over 100,000 iterations.
-
-## Parsing the `.jnn` File
-
-After training, the final `.jnn` model file can be parsed using the `nnue-parser` library:
-
-```python
-from nnue_parser import parse_nnue
-
-parsed_data = parse_nnue("model.jnn")
-```
-
-This allows you to inspect and analyze the trained NNUE model.
-
-## Troubleshooting / Common Errors
-
-### `TypeError: devices selected with CPUAccelerator should be an int > 0.`
-**Solution:** Ensure that `devices` in `train_nnue()` is not `None` or `0`. If training on CPU, explicitly set:
-
-```python
-train_nnue(..., device="cpu", num_workers=1)
-```
-
-### `RuntimeError: CUDA out of memory`
-**Solution:** If your GPU memory is insufficient, reduce the `batch_size`:
-
-```python
-train_nnue(..., batch_size=1024)
-```
-
-## Acknowledgments
-
-A big thank you to the repository [TensorFlowNNUE](https://github.com/DanielUranga/TensorFlowNNUE) for the model.
-
-## License
-
-This project is released under an open-source license. See the `LICENSE` file for more details.
-
-## Release Information
-
-This is the **first and final release** of NNUE Trainer.
-
+Stay focused and have fun training! 🚀
