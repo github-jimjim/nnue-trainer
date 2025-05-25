@@ -19,6 +19,9 @@ Follow these simple steps to train your own NNUE network quickly and efficiently
     gensfen depth 8 loop 20000000 save_every 20000000 output_file_name val.bin
     ```
 - Option 2: **Download pre-generated training sets** from my website if you don't want to generate them manually.
+  ´´´bash
+  https://jimmy1205.neocities.org/chess/jomfish
+  ´´´
 
 ---
 
