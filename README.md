@@ -80,6 +80,11 @@ If you don't want to train from scratch, you can use the already trained model `
 
 ---
 
+## 7. Documentation
+The documentation was written by me in German and the English Version may not be a good translation by this [translator](https://linnk.ai/tools/markdown-translator/)
+
+---
+
 ## Credits
 - Thanks to [DanielUranga/TensorFlowNNUE](https://github.com/DanielUranga/TensorFlowNNUE) for the open-source NNUE model!
 
